@@ -1,0 +1,28 @@
+#!/bin/bash
+echo "PayBox | PayLock"
+echo "Authorization for payment of $1 to Telestore"
+echo "Select payment method:"
+sleep 2
+echo "[1] PayBox"
+echo "[2] Bank account ending in 411"
+echo "[3] Afterpay (Bank account ending in 000)"
+read -p "Enter option: " opt
+case $opt in
+  1)
+    echo "$1 has been charged to your PayBox account."
+    echo "$(( $(cat /usr/local/telestore/bal/paybox) - $1 ))
+    ;;
+  2)
+    echo "$1 has been charged to Bank account ending in 411"
+    echo "$(( $(cat /usr/local/telestore/bal/bank) - $1 ))
+    ;;
+  3)
+    echo "Unimplemented" && exit 1
+    # asdfghjkl
+    echo "You selected Afterpay (Bank account ending in 000)."
+    echo "$(( $(cat /usr/local/telestore/bal/afterpay) - $1 ))
+    ;;
+  *)
+    echo "Invalid option selected."
+    ;;
+esac
